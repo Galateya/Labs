@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- encoding: UTF-8 -*-
+
 import random
 list0 = list('!"#$%&\'()*')
 list1 = list('0123456789')

@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- encoding: UTF-8 -*-
+
 passenter = str(input ('Введите пароль: '))
 
 #Списки алфавитов
@@ -39,10 +42,8 @@ def passmeter (passlen):
 	P = 10**-4 #вероятность подбора пароля злоумышленником
 	Sn = (V*T)//P  # нижняя граница стойкости
 	Ar = passlook(passenter)
-	print(Ar)
+	print(Ar, 'Здесь')
 	L = len (passenter)
 	A = Sn**(1/L)
 	print(Sn, A)
-	ar = passlen + 4
-	print(ar)
 passmeter(passlook)
