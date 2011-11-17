@@ -23,3 +23,22 @@ print(right)
 print(right[0][0])
 if 'w' in right[0]:
 	print('Yes')
+
+def SaveUser(name, rights):
+	right_u = ''
+	for k in rights:
+		right_u +=str(k) 
+
+
+	user_r = (str(name) + right_u)
+	f = open('{0}'.format(name),'w')
+	f.write(user_r)
+	f.close()
+
+SaveUser(Sample.get('register'),Sample.get('files'))
+
+def OpenUser (name):
+	f = open('{0}'.format(name))
+	print(f.readlines())
+
+OpenUser(Sample.get('register'))
