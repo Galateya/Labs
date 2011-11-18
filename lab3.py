@@ -3,15 +3,12 @@
 
 import optparse
 
-parser = optparse.OptionParser(usage = "DiscModel [-r] [-f] arg1 arg2",version = "DiscModel 0.02")
+parser = optparse.OptionParser(usage = "Пример регистрации пользователя: \n\n lab3.py -r Vasya<идентификатор> -f file1<имя файла> read<операция над файлом>\n -f file2 write ... -f fileN none. \n\n При вызове программы без дополнительных опций будет проведена идентификацияп пользователя и допуск работы с файлами",version = "DiscModel 0.69")
 
-parser.add_option("-r","--register",help="Регистрация нового пользователя. Следует вводить только имя пользователя, оно будет использовано как идентификатор")
-parser.add_option('-f','--files',action='append',nargs=2,help='Файлы, которые вы хотите учесть с параметрами прав. Пример: -f file1 read -f file2 write ... -f fileN None')
+parser.add_option("-r",help="Регистрация нового пользователя. Следует вводить только имя пользователя, оно будет использовано как идентификатор")
+parser.add_option('-f',action='append',nargs=2,help='Файлы, которые вы хотите учесть с параметрами прав. Пример: -f file1 read -f file2 write ... -f fileN None')
 
 (options,args) = parser.parse_args()
-
-print (options)
-print (args)
 
 Sample = options.__dict__
 
@@ -27,11 +24,39 @@ def SaveUser(name, rights):
 
 def OpenUser (name):
 	f = open('{0}'.format(name))
-	print(f.readlines()[0])
+	UserRight = f.readlines()[0]
+	print('\n',UserRight, '\n')
 	f.close()
+
+def RightChecker (name):
+	count = 0
+	while count != 1:
+		f = open('{0}'.format(name))
+		UserRight = f.readlines()[0]
+		oname = input('Какую операцию вы хотите провести: ')
+		if oname != 'exit':
+			fname = input('Введите имя файла: ')	
+		start = UserRight.find(fname) + len(fname) + 2
+		end =   len(oname) + start 
+
+		file_r = UserRight[start:end]
+
+		if oname == file_r and oname != 'exit':
+			print('Вы обладаете правом на эту операцию \n')
+		elif oname != 'exit':
+			print('Вы не обладаете правом на эту операцию \n')
+		elif oname == 'exit':
+			count += 1
+
 if Sample.get('register') is not None and Sample.get('files') is not None:
 	SaveUser(Sample.get('register'),Sample.get('files'))
-	OpenUser(Sample.get('register'))
 if Sample.get('register') is None and Sample.get('files') is None:
-	UserName = input ('Введите свой идентификатор: ')
-
+	count = 0
+	while count != 1:
+		try:
+			UserName = input ('Введите свой идентификатор: ')
+			OpenUser(UserName)
+			RightChecker(UserName)
+			count += 1
+		except IOError:
+			print('Такого пользователя не существует')
