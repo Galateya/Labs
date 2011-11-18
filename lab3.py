@@ -12,6 +12,9 @@ parser.add_option('-f',action='append',nargs=2,help='Файлы, которые 
 
 Sample = options.__dict__
 
+# В функцию SaveUser в name передается значение опции register (-r) (Sample.get('register')),
+# а в rights передается значени опции files (-f) (Sample.get('files'))
+
 def SaveUser(name, rights):
 	right_u = ''
 	for k in rights:
@@ -22,11 +25,15 @@ def SaveUser(name, rights):
 	f.write(user_r)
 	f.close()
 
+# В функцию OpenUser в name передается то же значение, что и в функцию SaveUser
+
 def OpenUser (name):
 	f = open('{0}'.format(name))
 	UserRight = f.readlines()[0]
 	print('\n',UserRight, '\n')
 	f.close()
+
+# В функцию RightChecker в name передается то же значение, что и в функцию SaveUser
 
 def RightChecker (name):
 	count = 0
@@ -48,8 +55,11 @@ def RightChecker (name):
 		elif oname == 'exit':
 			count += 1
 
+# Вызов функции SaveUser проводится только, если программа была запущена с доп. опциями
+
 if Sample.get('register') is not None and Sample.get('files') is not None:
 	SaveUser(Sample.get('register'),Sample.get('files'))
+# Вызов остальных функций проводится только, если программа была запущена без доп. опций
 if Sample.get('register') is None and Sample.get('files') is None:
 	count = 0
 	while count != 1:
