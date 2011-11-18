@@ -1,6 +1,8 @@
 #!usr/bin/python
 # -*- encoding: UTF-8 -*-
 
+# Программа универсальна для любого варианта
+
 import optparse
 
 parser = optparse.OptionParser(usage = "Пример регистрации пользователя: \n\n lab3.py -r Vasya<идентификатор> -f file1<имя файла> read<операция над файлом>\n -f file2 write ... -f fileN none. \n\n При вызове программы без дополнительных опций будет проведена идентификацияп пользователя и допуск работы с файлами",version = "DiscModel 0.69")
